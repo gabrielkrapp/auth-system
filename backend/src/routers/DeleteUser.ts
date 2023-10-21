@@ -2,16 +2,24 @@ import express from 'express';
 import { pool } from '../database/database';
 import bcrypt from 'bcryptjs';
 import { GetUserBy } from '../utils/GetUserBy';
+import { VerifyIfUserIsAdmin } from '../utils/VerifyIfUserIsAdmin';
 
 const router = express.Router();
 
 router.delete('/users/:id', async (req, res) => {
     const { id } = req.params
-    const user = await GetUserBy(id);
+    const token = req.headers.authorization?.split(' ')[1];
+    const { isAdmin, error } = await VerifyIfUserIsAdmin(token);
+    const deletedUser = await GetUserBy(id);
 
-    if (!user) {
+    if (!isAdmin) {
+        return res.status(403).json({ error });
+    }
+
+    if (!deletedUser) {
         return res.status(400).json({ error: "User not found" });
     }
+    
 
     try {
         const client = await pool.connect();
