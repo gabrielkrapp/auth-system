@@ -3,6 +3,7 @@ import { ValidatePassword } from "../utils/ValidatePassword";
 import { GetUserBy } from "../utils/GetUserBy";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { generateToken } from "../utils/GenerateToken";
 
 dotenv.config();
 
@@ -18,14 +19,7 @@ router.post("/login", async (req, res) => {
   }
 
   if (validatePassword) {
-    const { id } = user;
-    const token = jwt.sign(
-      {
-        id: id,
-        username: username,
-      },
-      process.env.JWT_SECRET!,
-    );
+    const token = generateToken(user.id, user.username, user.permissions);
     res.status(200).json({ token });
   } else {
     res.status(400).json({ error: "Invalid password" });

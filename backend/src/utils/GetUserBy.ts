@@ -2,14 +2,14 @@ import { pool } from "../database/database";
 
 export async function GetUserBy(
   username: string,
-): Promise<{ id: string; username: string } | null>;
+): Promise<{ id: string; username: string, permissions: string } | null>;
 export async function GetUserBy(
   id: string,
-): Promise<{ id: string; username: string } | null>;
+): Promise<{ id: string; username: string, permissions: string } | null>;
 
 export async function GetUserBy(
   value: string,
-): Promise<{ id: string; username: string } | null> {
+): Promise<{ id: string; username: string, permissions: string } | null> {
   const client = await pool.connect();
 
   const isUuid =
@@ -19,13 +19,14 @@ export async function GetUserBy(
   const field = isUuid ? "id" : "username";
 
   try {
-    const query = `SELECT id, username FROM users WHERE ${field} = $1`;
+    const query = `SELECT id, username, permissions FROM users WHERE ${field} = $1`;
     const { rows } = await client.query(query, [value]);
 
     if (rows.length > 0) {
       return {
         id: rows[0].id,
         username: rows[0].username,
+        permissions: rows[0].permissions,
       };
     } else {
       return null;
