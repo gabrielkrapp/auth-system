@@ -7,7 +7,7 @@
     "start": "vite",
     "build": "vite build",
     "test": "jest"
-  },  
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
