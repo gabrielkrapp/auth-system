@@ -1,7 +1,6 @@
 import express from 'express';
-import { FindUser } from '../utils/FindUserByUsername';
 import { ValidatePassword } from '../utils/ValidatePassword';
-import { GetUserId } from '../utils/GetUserId';
+import { GetUserBy } from '../utils/GetUserBy';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
@@ -11,21 +10,19 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const existingUser = await FindUser(username);
+    const user = await GetUserBy(username);
     const validatePassword = await ValidatePassword(username, password);
 
-    if (!existingUser) {
+    if (!user) {
         return res.status(400).json({ error: "User not found" });
     }
 
     if (validatePassword) {
-        const userId = await GetUserId(username);
-        console.log(userId);
+        const { id } = user;
         const token = jwt.sign({
-            id: userId,
+            id: id,
             username: username,
         }, process.env.JWT_SECRET!);
-
         res.status(200).json({ token });
     } else {
         res.status(400).json({ error: "Invalid password" });
