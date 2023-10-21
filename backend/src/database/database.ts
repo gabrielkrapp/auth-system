@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -13,9 +13,9 @@ export const pool = new Pool({
 
 pool.connect((err, client, release) => {
   if (err) {
-    console.error('Error connecting to the database:', err.stack);
+    console.error("Error connecting to the database:", err.stack);
     return;
   }
-  console.log('Connected to the database successfully!');
+  console.log("Connected to the database successfully!");
   release();
 });

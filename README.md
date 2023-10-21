@@ -38,10 +38,10 @@ This application was conceived as a blueprint for rapid full-stack development, 
 
 ## Installation
 
-Before you start, ensure you have `node` and `npm` installed on your machine. 
+Before you start, ensure you have `node` and `npm` installed on your machine.
 
 1. **Clone the repository**:
-   
+
    ```bash
    git clone https://github.com/gabrielkrapp/full-stack-template.git
    ```
@@ -55,7 +55,7 @@ Before you start, ensure you have `node` and `npm` installed on your machine.
 3. **Install the dependencies**:
 
    - For Frontend:
-   
+
      ```bash
      cd frontend && npm install
      ```
