@@ -9,7 +9,7 @@ dotenv.config();
 
 const router = express.Router();
 
-router.put("/users/:id", async (req, res) => {
+router.put("/users/admin/:id", async (req, res) => {
     const { id } = req.params;
     const token = req.headers.authorization?.split(' ')[1];
     const { isAdmin, error } = await VerifyIfUserIsAdmin(token);
@@ -25,8 +25,7 @@ router.put("/users/:id", async (req, res) => {
 
     try {
         const client = await pool.connect();
-        const query = MakeUserAdminQuery;
-        await client.query(query, [id]);
+        await client.query(MakeUserAdminQuery, [id]);
         client.release();
 
         return res.status(200).json({

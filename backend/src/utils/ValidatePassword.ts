@@ -1,3 +1,4 @@
+import { ValidatePasswordQuery } from "../database/Querys/UtilQuerys";
 import { pool } from "../database/database";
 import bcrypt from "bcryptjs";
 
@@ -5,8 +6,7 @@ export async function ValidatePassword(username: string, password: string) {
   const client = await pool.connect();
 
   try {
-    const query = "SELECT password FROM users WHERE username = $1";
-    const { rows } = await client.query(query, [username]);
+    const { rows } = await client.query(ValidatePasswordQuery, [username]);
 
     if (!rows.length) return false;
 

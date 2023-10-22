@@ -5,10 +5,10 @@ import updateuser from "./routers/UpdateUser";
 import deleteuser from "./routers/DeleteUser";
 import getusers from "./routers/GetUsers";
 import bodyParser from "body-parser";
+import makeuseradmin from "./routers/MakeUserAdmin";
 import "./config";
 
-const app = express();
-const PORT = 3000;
+export const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,7 +17,4 @@ app.use(login);
 app.use(updateuser);
 app.use(deleteuser);
 app.use(getusers);
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+app.use(makeuseradmin)

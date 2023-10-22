@@ -25,8 +25,7 @@ router.put("/users/:id", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = UpdateUserQuery;
-    await client.query(query, [username, hashedPassword, id]);
+    await client.query(UpdateUserQuery, [username, hashedPassword, id]);
     client.release();
 
     res.status(200).json({

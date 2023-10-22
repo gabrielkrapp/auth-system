@@ -19,8 +19,7 @@ router.post("/register", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = RegisterUserQuery;
-    await client.query(query, [id, username, hashedPassword]);
+    await client.query(RegisterUserQuery, [id, username, hashedPassword]);
     client.release();
 
     res.status(200).json({
