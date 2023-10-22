@@ -1,7 +1,6 @@
 import express from "express";
 import { ValidatePassword } from "../utils/ValidatePassword";
 import { GetUserBy } from "../utils/GetUserBy";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { generateToken } from "../utils/GenerateToken";
 

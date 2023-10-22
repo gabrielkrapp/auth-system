@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "start": "nodemon",
     "test": "jest"
@@ -12,26 +12,40 @@
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.20",
-    "@types/jest": "^29.5.6",
     "@types/node": "^20.8.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "jest": "^29.7.0",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.0.1",
     "opossum": "^8.1.2",
     "pg": "^8.11.3",
-    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.5",
+    "@types/jest": "^29.5.6",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/opossum": "^8.1.5",
     "@types/pg": "^8.10.7",
-    "@types/uuid": "^9.0.6"
-  }
+    "@types/supertest": "^2.0.15",
+    "@types/uuid": "^9.0.6",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": ".test.(ts|tsx)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }  
 }

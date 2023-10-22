@@ -15,7 +15,7 @@ router.put("/users/:id", async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   const { decodedToken, error } = await verifyToken(token);
     
-  if (error) {
+  if (!decodedToken) {
     return res.status(400).json({ error });
   }
 
@@ -25,8 +25,7 @@ router.put("/users/:id", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = UpdateUserQuery;
-    await client.query(query, [username, hashedPassword, id]);
+    await client.query(UpdateUserQuery, [username, hashedPassword, id]);
     client.release();
 
     res.status(200).json({

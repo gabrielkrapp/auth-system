@@ -1,3 +1,4 @@
+import { GetUserQuery } from "../database/Querys/UtilQuerys";
 import { pool } from "../database/database";
 
 export async function GetUserBy(
@@ -19,8 +20,7 @@ export async function GetUserBy(
   const field = isUuid ? "id" : "username";
 
   try {
-    const query = `SELECT id, username, permissions FROM users WHERE ${field} = $1`;
-    const { rows } = await client.query(query, [value]);
+    const { rows } = await client.query(GetUserQuery(field), [value]);
 
     if (rows.length > 0) {
       return {
