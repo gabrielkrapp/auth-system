@@ -15,7 +15,7 @@ router.put("/users/:id", async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   const { decodedToken, error } = await verifyToken(token);
     
-  if (error) {
+  if (!decodedToken) {
     return res.status(400).json({ error });
   }
 

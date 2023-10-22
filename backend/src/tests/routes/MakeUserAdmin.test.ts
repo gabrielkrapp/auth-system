@@ -49,4 +49,23 @@ describe('MakeUserAdmin router', () => {
 
     expect(response.status).toBe(200);
   }, testTimeout);
+
+  it('should return 403 if token is invalid', async () => {
+    const invalidToken = "1234";
+
+    (VerifyIfUserIsAdmin as jest.Mock).mockResolvedValueOnce({ isAdmin: false, error: "Invalid token" });
+
+    const response = await request(app).delete(`/users/${id}`).set('Authorization', `Bearer ${invalidToken}`);
+
+    expect(response.status).toBe(403);
+  }, testTimeout);
+
+  it('should return 403 when no token is provided', async () => {
+
+    (VerifyIfUserIsAdmin as jest.Mock).mockResolvedValueOnce({ isAdmin: false, error: "Authorization token not provided" });
+
+    const response = await request(app).delete(`/users/${id}`)
+
+    expect(response.status).toBe(403);
+  }, testTimeout);
 });
