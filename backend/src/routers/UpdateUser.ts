@@ -3,6 +3,7 @@ import { pool } from "../database/database";
 import bcrypt from "bcryptjs";
 import { GetUserBy } from "../utils/GetUserBy";
 import { verifyToken } from "../utils/VerifyToken";
+import { UpdateUserQuery } from "../database/Querys/RoutersQuerys";
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.put("/users/:id", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query = "UPDATE users SET username = $1, password = $2 WHERE id = $3";
+    const query = UpdateUserQuery;
     await client.query(query, [username, hashedPassword, id]);
     client.release();
 

@@ -3,6 +3,7 @@ import register from "./routers/Register";
 import login from "./routers/Login";
 import updateuser from "./routers/UpdateUser";
 import deleteuser from "./routers/DeleteUser";
+import getusers from "./routers/GetUsers";
 import bodyParser from "body-parser";
 import "./config";
 
@@ -15,6 +16,7 @@ app.use(register);
 app.use(login);
 app.use(updateuser);
 app.use(deleteuser);
+app.use(getusers);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
