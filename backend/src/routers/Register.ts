@@ -3,6 +3,7 @@ import { pool } from "../database/database";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 import { GetUserBy } from "../utils/GetUserBy";
+import { RegisterUserQuery } from "../database/Querys/RoutersQuerys";
 
 const router = express.Router();
 
@@ -18,8 +19,7 @@ router.post("/register", async (req, res) => {
 
   try {
     const client = await pool.connect();
-    const query =
-      "INSERT INTO users (id, username, password) VALUES ($1, $2, $3)";
+    const query = RegisterUserQuery;
     await client.query(query, [id, username, hashedPassword]);
     client.release();
 

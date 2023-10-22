@@ -3,6 +3,7 @@ import { pool } from '../database/database';
 import bcrypt from 'bcryptjs';
 import { GetUserBy } from '../utils/GetUserBy';
 import { VerifyIfUserIsAdmin } from '../utils/VerifyIfUserIsAdmin';
+import { DeleteUserQuery } from '../database/Querys/RoutersQuerys';
 
 const router = express.Router();
 
@@ -23,8 +24,7 @@ router.delete('/users/:id', async (req, res) => {
 
     try {
         const client = await pool.connect();
-        const query =
-        "DELETE FROM users WHERE id = $1";
+        const query = DeleteUserQuery;
         await client.query(query, [id]);
         client.release();
 
