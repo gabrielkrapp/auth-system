@@ -7,9 +7,11 @@ import getusers from "./routers/GetUsers";
 import bodyParser from "body-parser";
 import makeuseradmin from "./routers/MakeUserAdmin";
 import "./config";
+import cors from 'cors';
 
 export const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(register);
@@ -18,3 +20,4 @@ app.use(updateuser);
 app.use(deleteuser);
 app.use(getusers);
 app.use(makeuseradmin)
+
