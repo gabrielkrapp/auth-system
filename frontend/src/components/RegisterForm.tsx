@@ -32,11 +32,11 @@ const RegisterForm = () => {
     e.preventDefault();
 
     try {
-        await axios.post(`${BASE_URL}/register`, formData);
+      await axios.post(`${BASE_URL}/register`, formData);
     } catch (error) {
-        setServerError("Failed to register. Please try again later.");
+      setServerError("Failed to register. Please try again later.");
     }
-};
+  };
 
   return (
     <form className="mt-8" onSubmit={register}>

@@ -12,9 +12,9 @@ router.put("/users/:id", async (req, res) => {
   const { username, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await GetUserBy(id);
-  const token = req.headers.authorization?.split(' ')[1];
+  const token = req.headers.authorization?.split(" ")[1];
   const { decodedToken, error } = await verifyToken(token);
-    
+
   if (!decodedToken) {
     return res.status(400).json({ error });
   }

@@ -4,11 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 
 jest.mock("../../database/database", () => ({
   pool: {
-    connect: jest.fn()
-  }
+    connect: jest.fn(),
+  },
 }));
 
-const id = uuidv4()
+const id = uuidv4();
 const username = "testuser";
 
 describe("GetUserBy function", () => {
@@ -20,26 +20,34 @@ describe("GetUserBy function", () => {
 
     (pool.connect as jest.Mock).mockResolvedValue({
       query: mockQuery,
-      release: mockRelease
+      release: mockRelease,
     });
   });
 
   it("should return user data when searching by username", async () => {
     mockQuery.mockResolvedValueOnce({
-      rows: [{ id: id, username: "testuser", permissions: "user" }]
+      rows: [{ id: id, username: "testuser", permissions: "user" }],
     });
 
     const result = await GetUserBy(username);
-    expect(result).toEqual({ id: id, username: "testuser", permissions: "user" });
+    expect(result).toEqual({
+      id: id,
+      username: "testuser",
+      permissions: "user",
+    });
   });
 
   it("should return user data when searching by id", async () => {
     mockQuery.mockResolvedValueOnce({
-      rows: [{ id: id, username: "testuser", permissions: "user" }]
+      rows: [{ id: id, username: "testuser", permissions: "user" }],
     });
 
     const result = await GetUserBy(id);
-    expect(result).toEqual({ id: id, username: "testuser", permissions: "user" });
+    expect(result).toEqual({
+      id: id,
+      username: "testuser",
+      permissions: "user",
+    });
   });
 
   it("should return null if no user is found", async () => {

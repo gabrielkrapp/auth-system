@@ -3,14 +3,14 @@ import { pool } from "../database/database";
 
 export async function GetUserBy(
   username: string,
-): Promise<{ id: string; username: string, permissions: string } | null>;
+): Promise<{ id: string; username: string; permissions: string } | null>;
 export async function GetUserBy(
   id: string,
-): Promise<{ id: string; username: string, permissions: string } | null>;
+): Promise<{ id: string; username: string; permissions: string } | null>;
 
 export async function GetUserBy(
   value: string,
-): Promise<{ id: string; username: string, permissions: string } | null> {
+): Promise<{ id: string; username: string; permissions: string } | null> {
   const client = await pool.connect();
 
   const isUuid =
