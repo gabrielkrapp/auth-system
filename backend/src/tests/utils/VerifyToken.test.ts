@@ -2,7 +2,7 @@ import { verifyToken } from "../../utils/VerifyToken";
 import jwt from "jsonwebtoken";
 
 jest.mock("jsonwebtoken", () => ({
-  verify: jest.fn()
+  verify: jest.fn(),
 }));
 
 describe("verifyToken function", () => {
@@ -41,4 +41,3 @@ describe("verifyToken function", () => {
     expect(result).toEqual({ error: "Invalid or expired token" });
   });
 });
-

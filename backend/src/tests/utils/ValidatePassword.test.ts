@@ -4,12 +4,12 @@ import bcrypt from "bcryptjs";
 
 jest.mock("../../database/database", () => ({
   pool: {
-    connect: jest.fn()
-  }
+    connect: jest.fn(),
+  },
 }));
 
 jest.mock("bcryptjs", () => ({
-  compare: jest.fn()
+  compare: jest.fn(),
 }));
 
 const username = "testuser";
@@ -25,7 +25,7 @@ describe("ValidatePassword function", () => {
 
     (pool.connect as jest.Mock).mockResolvedValue({
       query: mockQuery,
-      release: mockRelease
+      release: mockRelease,
     });
   });
 
@@ -35,7 +35,7 @@ describe("ValidatePassword function", () => {
     const hashedPassword = "hashedpassword";
 
     mockQuery.mockResolvedValueOnce({
-      rows: [{ password: hashedPassword }]
+      rows: [{ password: hashedPassword }],
     });
 
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(true);
@@ -51,7 +51,7 @@ describe("ValidatePassword function", () => {
     const hashedPassword = "hashedpassword";
 
     mockQuery.mockResolvedValueOnce({
-      rows: [{ password: hashedPassword }]
+      rows: [{ password: hashedPassword }],
     });
 
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(false);
@@ -66,7 +66,7 @@ describe("ValidatePassword function", () => {
     const password = "testpassword";
 
     mockQuery.mockResolvedValueOnce({
-      rows: []
+      rows: [],
     });
 
     const result = await ValidatePassword(username, password);
@@ -91,7 +91,7 @@ describe("ValidatePassword function", () => {
     const hashedPassword = "hashedpassword";
 
     mockQuery.mockResolvedValueOnce({
-      rows: [{ password: hashedPassword }]
+      rows: [{ password: hashedPassword }],
     });
 
     (bcrypt.compare as jest.Mock).mockResolvedValueOnce(true);

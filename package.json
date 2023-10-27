@@ -8,5 +8,8 @@
     "start-backend": "cd backend && npm start",
     "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
     "format": "prettier --write ."
+  },
+  "dependencies": {
+    "react-icons": "^4.11.0"
   }
 }

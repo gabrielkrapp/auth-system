@@ -21,7 +21,7 @@ pool.connect(async (err, client, release) => {
     } catch (breakerError) {
       console.error("Circuit Breaker tripped:", breakerError);
     }
-      
+
     return;
   }
   console.log("Connected to the database successfully!");

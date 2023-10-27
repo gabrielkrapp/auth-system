@@ -1,8 +1,8 @@
 import { VerifyIfUserIsAdmin } from "../../utils/VerifyIfUserIsAdmin";
-import { verifyToken } from "../../utils/VerifyToken"
+import { verifyToken } from "../../utils/VerifyToken";
 
 jest.mock("../../utils/VerifyToken", () => ({
-  verifyToken: jest.fn()
+  verifyToken: jest.fn(),
 }));
 
 describe("VerifyIfUserIsAdmin function", () => {
@@ -13,7 +13,7 @@ describe("VerifyIfUserIsAdmin function", () => {
   it("should identify an admin user", async () => {
     const mockToken = "mockToken";
     (verifyToken as jest.Mock).mockResolvedValueOnce({
-      decodedToken: { permissions: "admin" }
+      decodedToken: { permissions: "admin" },
     });
 
     const result = await VerifyIfUserIsAdmin(mockToken);
@@ -24,7 +24,7 @@ describe("VerifyIfUserIsAdmin function", () => {
   it("should deny permission for non-admin user", async () => {
     const mockToken = "mockToken";
     (verifyToken as jest.Mock).mockResolvedValueOnce({
-      decodedToken: { permissions: "user" }
+      decodedToken: { permissions: "user" },
     });
 
     const result = await VerifyIfUserIsAdmin(mockToken);
@@ -35,7 +35,7 @@ describe("VerifyIfUserIsAdmin function", () => {
   it("should handle invalid or expired tokens", async () => {
     const mockToken = "invalidToken";
     (verifyToken as jest.Mock).mockResolvedValueOnce({
-      error: "Invalid token"
+      error: "Invalid token",
     });
 
     const result = await VerifyIfUserIsAdmin(mockToken);
@@ -45,7 +45,7 @@ describe("VerifyIfUserIsAdmin function", () => {
 
   it("should handle missing tokens", async () => {
     (verifyToken as jest.Mock).mockResolvedValueOnce({
-      error: "Token is missing"
+      error: "Token is missing",
     });
 
     const result = await VerifyIfUserIsAdmin(undefined);
