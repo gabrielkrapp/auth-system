@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../App";
-import { FaTrash, FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-
-interface User {
-  id: string;
-  username: string;
-  permissions: string;
-}
+import DeleteUser from "../components/DeleteUser";
+import EditUser from "../components/EditUser";
+import AddUser from "../components/AddUser";
+import { AlertError } from "../components/Alert";
+import MakeUserAdmin from "../components/MakeUserAdmin";
 
 const Admin = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [showErrorAlert, setShowErrorAlert] = useState(false);
   const navigate = useNavigate();
-
   const token = localStorage.getItem("authToken");
 
   const fetchUsers = async () => {
@@ -30,7 +26,10 @@ const Admin = () => {
       setUsers(response.data.rows);
       setLoading(false);
     } catch (err) {
-      setError("Failed to fetch users.");
+      setShowErrorAlert(true);
+      setTimeout(() => {
+        setShowErrorAlert(false);
+      }, 5000);
       setLoading(false);
     }
   };
@@ -41,24 +40,6 @@ const Admin = () => {
 
   const handleBackClick = () => {
     navigate(-1);
-  };
-
-  const handleDeleteUser = async (id: string) => {
-    if (id === "23e3b910-b001-466d-9462-2e7ba205339f") {
-      setError("You can't delete the admin user.");
-      return;
-    } else {
-      try {
-        await axios.delete(`${BASE_URL}/users/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        fetchUsers();
-      } catch (err) {
-        console.log(err);
-      }
-    }
   };
 
   return (
@@ -73,15 +54,12 @@ const Admin = () => {
         </button>
       </div>
       <h1 className="text-3xl font-bold mb-6 mt-6">User List</h1>
-      <button className="flex items-center text-blue-500 hover:text-blue-700 bg-white px-3 py-2 rounded shadow transition duration-150 ease-in-out mb-3">
-        <AiOutlinePlusCircle className="mr-2" />
-        Add User
-      </button>
+      <AddUser fetchUsers={fetchUsers} />
       <div className="flex flex-wrap justify-center items-start w-full">
         {loading ? (
           <p>Loading...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
+        ) : showErrorAlert ? (
+          <AlertError message={"Failed to fetch users."} />
         ) : (
           users.map((user) => (
             <div
@@ -99,13 +77,24 @@ const Admin = () => {
                 {user.permissions}
               </p>
               <div className="absolute top-1 right-1 flex space-x-2">
-                <FaEdit className="h-6 w-6 text-gray-500 hover:text-gray-700 cursor-pointer" />
-                <button
-                  onClick={() => handleDeleteUser(user.id)}
-                  className="focus:outline-none"
-                >
-                  <FaTrash className="h-6 w-6 text-red-500 hover:text-red-700 cursor-pointer" />
-                </button>
+                <EditUser
+                  id={user.id}
+                  permissions={user.permissions}
+                  username={user.username}
+                  token={token || ""}
+                  fetchUsers={fetchUsers}
+                />
+                <MakeUserAdmin
+                  id={user.id}
+                  fetchUsers={fetchUsers}
+                  token={token || ""}
+                />
+                <DeleteUser
+                  id={user.id}
+                  permissions={user.permissions}
+                  fetchUsers={fetchUsers}
+                  token={token || ""}
+                />
               </div>
             </div>
           ))
