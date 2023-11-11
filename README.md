@@ -29,15 +29,6 @@ Auth System boasts a variety of features designed to enhance security and user e
 - Protected routes based on user authentication status
 - User profile updates and deletion
 
-### Upcoming Features
-
-Auth System is evolving. Here are some features that we are actively working on:
-
-| Feature                    | Status      |
-| -------------------------- | ----------- |
-| Google Sign-In Integration | In Progress |
-| Frontend Unit Testing      | In Progress |
-
 ## Development
 
 This project is still under active development. We are constantly working on enhancing its functionalities and integrating more features to provide a comprehensive authentication solution. Your contributions and feedback are highly welcomed.
